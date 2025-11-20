@@ -1,0 +1,766 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Formulas & Code Hub — Excel + Python</title>
+<style>
+  :root{
+    --bg:#0f1724; --card:#0b1220; --muted:#9aa7b2; --accent:#06b6d4; --glass: rgba(255,255,255,0.03);
+    --code-bg:#071122; --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;
+  }
+  html,body{height:100%;margin:0;background:linear-gradient(180deg,#071025 0%, #071229 60%);color:#e6eef3;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+  .wrap{max-width:1100px;margin:36px auto;padding:28px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;box-shadow:0 10px 40px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03);}
+  header{display:flex;gap:16px;align-items:center;margin-bottom:18px;}
+  header h1{margin:0;font-size:20px;letter-spacing:0.2px;}
+  .meta{color:var(--muted);font-size:13px;}
+  .controls{display:flex;gap:12px;align-items:center;margin:14px 0 22px;}
+  .search{flex:1;display:flex;align-items:center;background:var(--glass);border-radius:10px;padding:8px 10px;border:1px solid rgba(255,255,255,0.03);}
+  .search input{background:transparent;border:none;outline:none;color:inherit;font-size:15px;width:100%;}
+  .buttons{display:flex;gap:8px;}
+  button{background:linear-gradient(90deg,var(--accent),#10b981);border:none;padding:8px 12px;border-radius:8px;color:#042;cursor:pointer;font-weight:600;box-shadow:0 6px 18px rgba(6,182,212,0.12);}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .column{padding:6px;}
+  .section-title{font-size:15px;margin:6px 0 12px;color:#bfeaf4;}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.0));padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 6px 18px rgba(2,6,23,0.4);margin-bottom:12px;}
+  .card h3{margin:0 0 8px;font-size:14px;}
+  pre{background:var(--code-bg);padding:12px;border-radius:8px;overflow:auto;font-family:var(--mono);font-size:13px;line-height:1.45;color:#dbeef6;border:1px solid rgba(255,255,255,0.03);}
+  .card .meta{font-size:12px;color:var(--muted);margin-bottom:8px;}
+  .card .actions{display:flex;gap:8px;justify-content:flex-end;margin-top:8px;}
+  .copy-btn{background:transparent;border:1px solid rgba(255,255,255,0.03);padding:6px 8px;border-radius:8px;color:var(--muted);cursor:pointer;font-weight:700;}
+  .small{font-size:13px;color:var(--muted);}
+  .hint{font-size:13px;color:var(--muted);margin-top:6px;}
+  .hidden{display:none !important;}
+  @media (max-width:980px){ .grid{grid-template-columns:1fr;} .wrap{margin:12px;padding:16px;} }
+  mark{background:rgba(6,182,212,0.12);color:var(--accent);padding:0 3px;border-radius:3px;}
+</style>
+</head>
+<body>
+  <div class="wrap" role="main">
+    <header>
+      <div style="flex:1">
+        <h1>Formulas & Code Hub — Excel + Python</h1>
+        <div class="meta">All formulas (53) & Python programs (9) — searchable & copyable. Ready to deploy to Netlify.</div>
+      </div>
+      <div class="meta small">Tip: Type a formula name, function, or word to instantly filter results.</div>
+    </header>
+
+    <div class="controls">
+      <div class="search" aria-label="Search content">
+        <svg width="18" height="18" viewBox="0 0 24 24" style="margin-right:8px;opacity:0.9">
+          <path fill="#9aa7b2" d="M21 19l-5.4-5.4a7 7 0 10-1.4 1.4L19 21z"></path>
+        </svg>
+        <input id="q" placeholder="Search (example: VLOOKUP, IFS, Lambda, LEFT, t-test, Linear Regression) — live results" />
+      </div>
+      <div class="buttons">
+        <button id="clear">Clear</button>
+        <button id="expand">Show All</button>
+      </div>
+    </div>
+
+    <div class="grid" id="grid">
+      <!-- Left column: Excel Formulas -->
+      <div class="column" id="excel-col">
+        <div class="section-title">Excel Formulas (All combined, copyable)</div>
+
+        <!-- We'll insert each formula card here -->
+        <!-- 1 -->
+        <div class="card formula-card" data-keywords="total sales calculate d2 e2">
+          <h3>Calculate Total Sales</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=D2*E2</code></pre>
+          <div class="actions"><button class="copy-btn" data-target="=D2*E2">Copy</button></div>
+        </div>
+
+        <!-- 2 -->
+        <div class="card formula-card" data-keywords="total sales alternate e2 f2">
+          <h3>Calculate Total Sales (Alternate Columns)</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=E2*F2</code></pre>
+          <div class="actions"><button class="copy-btn" data-target="=E2*F2">Copy</button></div>
+        </div>
+
+        <!-- 3 -->
+        <div class="card formula-card" data-keywords="if high low performance f2 400000">
+          <h3>Performance Category (High / Low)</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=IF(F2>=400000,"High","Low")</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=IF(F2>=400000,"High","Low")'>Copy</button></div>
+        </div>
+
+        <!-- 4 -->
+        <div class="card formula-card" data-keywords="ifs excellent good needs improvement h2 500000 300000">
+          <h3>Performance Classification (Excellent / Good / Needs Improvement)</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=IFS(H2>=500000,"Excellent", H2>=300000,"Good", H2<300000,"Needs Improvement")</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=IFS(H2>=500000,"Excellent", H2>=300000,"Good", H2<300000,"Needs Improvement")'>Copy</button></div>
+        </div>
+
+        <!-- 5 -->
+        <div class="card formula-card" data-keywords="counta non-empty names b2 b6">
+          <h3>Count Non-Empty Cells (Names)</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=COUNTA(B2:B6)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=COUNTA(B2:B6)'>Copy</button></div>
+        </div>
+
+        <!-- 6 -->
+        <div class="card formula-card" data-keywords="countif high performers g2 g7 High">
+          <h3>Count High Performers</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=COUNTIF(G2:G7,"High")</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=COUNTIF(G2:G7,"High")'>Copy</button></div>
+        </div>
+
+        <!-- 7 -->
+        <div class="card formula-card" data-keywords="countifs ravi south b2 b9 c2 c9">
+          <h3>Count Employee in Specific Region</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=COUNTIFS(B2:B9,"Ravi", C2:C9,"South")</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=COUNTIFS(B2:B9,"Ravi", C2:C9,"South")'>Copy</button></div>
+        </div>
+
+        <!-- 8 -->
+        <div class="card formula-card" data-keywords="sumif asha a2 a7 f2 f7">
+          <h3>Sum Total Sales of Asha</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=SUMIF(A2:A7,"Asha",F2:F7)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=SUMIF(A2:A7,"Asha",F2:F7)'>Copy</button></div>
+        </div>
+
+        <!-- 9 -->
+        <div class="card formula-card" data-keywords="sumifs laptop north h2 h9 d2 d9 c2 c9">
+          <h3>Sum Laptop Sales in North Region</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=SUMIFS(H2:H9, D2:D9,"Laptop", C2:C9,"North")</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=SUMIFS(H2:H9, D2:D9,"Laptop", C2:C9,"North")'>Copy</button></div>
+        </div>
+
+        <!-- 10 -->
+        <div class="card formula-card" data-keywords="average total sales f2 f7">
+          <h3>Average Total Sales</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=AVERAGE(F2:F7)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=AVERAGE(F2:F7)'>Copy</button></div>
+        </div>
+
+        <!-- 11 -->
+        <div class="card formula-card" data-keywords="averageifs tablet mar h2 h9 d2 d9 g2 g9">
+          <h3>Average Tablet Sales in March</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=AVERAGEIFS(H2:H9, D2:D9,"Tablet", G2:G9,"Mar")</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=AVERAGEIFS(H2:H9, D2:D9,"Tablet", G2:G9,"Mar")'>Copy</button></div>
+        </div>
+
+        <!-- 12 -->
+        <div class="card formula-card" data-keywords="concat salesinfo a2 c2">
+          <h3>Join Salesperson with Product</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=CONCAT(A2," - ",C2)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=CONCAT(A2," - ",C2)'>Copy</button></div>
+        </div>
+
+        <!-- 13 -->
+        <div class="card formula-card" data-keywords="index match find region neha">
+          <h3>Find Region of “Neha” (INDEX + MATCH)</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=INDEX(C2:C9, MATCH("Neha", B2:B9, 0))</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=INDEX(C2:C9, MATCH("Neha", B2:B9, 0))'>Copy</button></div>
+        </div>
+
+        <!-- 14 -->
+        <div class="card formula-card" data-keywords="vlookup s103 science marks a2 f6">
+          <h3>VLOOKUP Example (Science Marks)</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=VLOOKUP("S103", A2:F6, 5, FALSE)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=VLOOKUP("S103", A2:F6, 5, FALSE)'>Copy</button></div>
+        </div>
+
+        <!-- 15 -->
+        <div class="card formula-card" data-keywords="vlookup iferror s120 not found">
+          <h3>VLOOKUP with IFERROR</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=IFERROR(VLOOKUP("S120", A2:E11, 2, FALSE), "Not Found")</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=IFERROR(VLOOKUP("S120", A2:E11, 2, FALSE), "Not Found")'>Copy</button></div>
+        </div>
+
+        <!-- 16 -->
+        <div class="card formula-card" data-keywords="xlookup diya english b2 f2">
+          <h3>XLOOKUP Example (English Marks of Diya)</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=XLOOKUP("Diya", B2:B6, F2:F6)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=XLOOKUP("Diya", B2:B6, F2:F6)'>Copy</button></div>
+        </div>
+
+        <!-- 17 -->
+        <div class="card formula-card" data-keywords="unique list unique products d2 d9">
+          <h3>List Unique Products</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=UNIQUE(D2:D9)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=UNIQUE(D2:D9)'>Copy</button></div>
+        </div>
+
+        <!-- 18 -->
+        <div class="card formula-card" data-keywords="filter filter maths >85 a2 e11 d2 d11">
+          <h3>Filter Students with Maths Marks &gt; 85</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=FILTER(A2:E11, D2:D11 &gt; 85)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=FILTER(A2:E11, D2:D11 > 85)'>Copy</button></div>
+        </div>
+
+        <!-- 19 -->
+        <div class="card formula-card" data-keywords="left extract first name email d2 search dot">
+          <h3>Extract First Name from Email</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=LEFT(D2, SEARCH(".", D2) - 1)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=LEFT(D2, SEARCH(".", D2) - 1)'>Copy</button></div>
+        </div>
+
+        <!-- 20 -->
+        <div class="card formula-card" data-keywords="mid extract last name email d2 search @ dot">
+          <h3>Extract Last Name from Email</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=MID(D2, SEARCH(".", D2) + 1, SEARCH("@", D2) - SEARCH(".", D2) - 1)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=MID(D2, SEARCH(".", D2) + 1, SEARCH("@", D2) - SEARCH(".", D2) - 1)'>Copy</button></div>
+        </div>
+
+        <!-- 21 -->
+        <div class="card formula-card" data-keywords="right len extract domain d2 search @">
+          <h3>Extract Domain from Email</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=RIGHT(D2, LEN(D2) - SEARCH("@", D2))</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=RIGHT(D2, LEN(D2) - SEARCH("@", D2))'>Copy</button></div>
+        </div>
+
+        <!-- 22 -->
+        <div class="card formula-card" data-keywords="len phone length e2">
+          <h3>Length of Phone Number</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=LEN(E2)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=LEN(E2)'>Copy</button></div>
+        </div>
+
+        <!-- 23 -->
+        <div class="card formula-card" data-keywords="substitute remove country code +91 e2">
+          <h3>Remove Country Code (+91-)</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=SUBSTITUTE(E2, "+91-", "")</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=SUBSTITUTE(E2, "+91-", "")'>Copy</button></div>
+        </div>
+
+        <!-- 24 -->
+        <div class="card formula-card" data-keywords="isnumber search contains a c2">
+          <h3>Check if Department Contains “a”</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=ISNUMBER(SEARCH("a", C2))</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=ISNUMBER(SEARCH("a", C2))'>Copy</button></div>
+        </div>
+
+        <!-- 25 -->
+        <div class="card formula-card" data-keywords="today todays date">
+          <h3>Today's Date</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=TODAY()</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=TODAY()'>Copy</button></div>
+        </div>
+
+        <!-- 26 -->
+        <div class="card formula-card" data-keywords="now current date time">
+          <h3>Current Date &amp; Time</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=NOW()</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=NOW()'>Copy</button></div>
+        </div>
+
+        <!-- 27 -->
+        <div class="card formula-card" data-keywords="year hire year c2">
+          <h3>Extract Hire Year</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=YEAR(C2)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=YEAR(C2)'>Copy</button></div>
+        </div>
+
+        <!-- 28 -->
+        <div class="card formula-card" data-keywords="month hire month c2">
+          <h3>Extract Hire Month</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=MONTH(C2)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=MONTH(C2)'>Copy</button></div>
+        </div>
+
+        <!-- 29 -->
+        <div class="card formula-card" data-keywords="networkdays working days between c2 d2">
+          <h3>Working Days Between Hire Date &amp; Project End</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=NETWORKDAYS(C2, D2)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=NETWORKDAYS(C2, D2)'>Copy</button></div>
+        </div>
+
+        <!-- 30 -->
+        <div class="card formula-card" data-keywords="eomonth end of month c2">
+          <h3>End of Month for Hire Date</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=EOMONTH(C2, 0)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=EOMONTH(C2, 0)'>Copy</button></div>
+        </div>
+
+        <!-- 31 -->
+        <div class="card formula-card" data-keywords="max max sale d2 d9">
+          <h3>Max Total Sales</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=MAX(D2:D9)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=MAX(D2:D9)'>Copy</button></div>
+        </div>
+
+        <!-- 32 -->
+        <div class="card formula-card" data-keywords="frequency fixed bins d2 d11 60 70 80 90 100">
+          <h3>Frequency Distribution (Fixed Bin Set)</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=FREQUENCY(D2:D11, {60,70,80,90,100})</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=FREQUENCY(D2:D11, {60,70,80,90,100})'>Copy</button></div>
+        </div>
+
+        <!-- 33 -->
+        <div class="card formula-card" data-keywords="frequency ranges g17 g26 i17 i21">
+          <h3>Frequency Distribution (Cell Ranges)</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=FREQUENCY(G17:G26, I17:I21)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=FREQUENCY(G17:G26, I17:I21)'>Copy</button></div>
+        </div>
+
+        <!-- 34 -->
+        <div class="card formula-card" data-keywords="rank rank.eq d2 d2 d9">
+          <h3>Ranking of Total Sales</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=RANK.EQ(D2, $D$2:$D$9, 0)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=RANK.EQ(D2, $D$2:$D$9, 0)'>Copy</button></div>
+        </div>
+
+        <!-- 35 -->
+        <div class="card formula-card" data-keywords="offset average 3 row aavg offset d2">
+          <h3>Average of 3-Row Window (OFFSET)</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=AVERAGE(OFFSET($D$2, 0, 0, 3, 1))</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=AVERAGE(OFFSET($D$2, 0, 0, 3, 1))'>Copy</button></div>
+        </div>
+
+        <!-- 36 -->
+        <div class="card formula-card" data-keywords="let top seller ms max d2 d9 if">
+          <h3>Top Seller Flag (LET)</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=LET(ms, MAX($D$2:$D$9), IF(D5 = ms, "Top Seller", ""))</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=LET(ms, MAX($D$2:$D$9), IF(D5 = ms, "Top Seller", ""))'>Copy</button></div>
+        </div>
+
+        <!-- 37 -->
+        <div class="card formula-card" data-keywords="choose quarter month datevalue e2">
+          <h3>Determine Quarter Using CHOOSE</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=CHOOSE(MONTH(DATEVALUE("1 " & E2)), "Q1","Q1","Q1","Q2","Q2","Q2","Q3","Q3","Q3","Q4","Q4","Q4")</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=CHOOSE(MONTH(DATEVALUE("1 " & E2)), "Q1","Q1","Q1","Q2","Q2","Q2","Q3","Q3","Q3","Q4","Q4","Q4")'>Copy</button></div>
+        </div>
+
+        <!-- 38 -->
+        <div class="card formula-card" data-keywords="sort sales descending d2 d9">
+          <h3>Sort Total Sales Descending</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=SORT(D2:D9, 1, -1)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=SORT(D2:D9, 1, -1)'>Copy</button></div>
+        </div>
+
+        <!-- 39 -->
+        <div class="card formula-card" data-keywords="sortby names by sales b2 b9 d2 d9">
+          <h3>Sort Names by Total Sales</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=SORTBY(B2:B9, D2:D9, -1)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=SORTBY(B2:B9, D2:D9, -1)'>Copy</button></div>
+        </div>
+
+        <!-- 40 -->
+        <div class="card formula-card" data-keywords="sequence 1 to 10">
+          <h3>Generate Sequence 1–10</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=SEQUENCE(10, 1, 1, 1)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=SEQUENCE(10, 1, 1, 1)'>Copy</button></div>
+        </div>
+
+        <!-- 41 -->
+        <div class="card formula-card" data-keywords="randarray random array 50 100">
+          <h3>Generate Random Array (50–100)</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=RANDARRAY(10, 1, 50, 100, TRUE)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=RANDARRAY(10, 1, 50, 100, TRUE)'>Copy</button></div>
+        </div>
+
+        <!-- 42 -->
+        <div class="card formula-card" data-keywords="iferror vlookup not found">
+          <h3>VLOOKUP with Error Handling</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=IFERROR(VLOOKUP("S120", A2:E11, 2, FALSE), "Not Found")</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=IFERROR(VLOOKUP("S120", A2:E11, 2, FALSE), "Not Found")'>Copy</button></div>
+        </div>
+
+        <!-- 43 -->
+        <div class="card formula-card" data-keywords="frequency maths marks g17 g26 i17 i21">
+          <h3>Frequency of Maths Marks from Table</h3>
+          <div class="meta small">Exact formula (copyable)</div>
+          <pre><code>=FREQUENCY(G17:G26, I17:I21)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=FREQUENCY(G17:G26, I17:I21)'>Copy</button></div>
+        </div>
+
+        <!-- 44 -->
+        <div class="card formula-card" data-keywords="countifs ravi south duplicate skip">
+          <h3>COUNTIFS Example (duplicate included)</h3>
+          <div class="meta small">Note: This formula exists once in the list above. Shown for completeness.</div>
+          <pre><code>=COUNTIFS(B2:B9,"Ravi", C2:C9,"South")</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=COUNTIFS(B2:B9,"Ravi", C2:C9,"South")'>Copy</button></div>
+        </div>
+
+        <!-- 45 -->
+        <div class="card formula-card" data-keywords="frequency fixed bins duplicate">
+          <h3>FREQUENCY (example shown earlier)</h3>
+          <div class="meta small">Note: This appears with earlier frequency examples.</div>
+          <pre><code>=FREQUENCY(D2:D11, {60,70,80,90,100})</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=FREQUENCY(D2:D11, {60,70,80,90,100})'>Copy</button></div>
+        </div>
+
+        <!-- 46 -->
+        <div class="card formula-card" data-keywords="average window offset example">
+          <h3>AVERAGE (OFFSET window example)</h3>
+          <div class="meta small">Shown earlier — included again for quick access.</div>
+          <pre><code>=AVERAGE(OFFSET($D$2, 0, 0, 3, 1))</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=AVERAGE(OFFSET($D$2, 0, 0, 3, 1))'>Copy</button></div>
+        </div>
+
+        <!-- 47 -->
+        <div class="card formula-card" data-keywords="max sale duplicate">
+          <h3>MAX (duplicate shown)</h3>
+          <div class="meta small">Quick access</div>
+          <pre><code>=MAX(D2:D9)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=MAX(D2:D9)'>Copy</button></div>
+        </div>
+
+        <!-- 48 -->
+        <div class="card formula-card" data-keywords="sort duplicate quick access">
+          <h3>SORT (duplicate shown)</h3>
+          <div class="meta small">Quick access</div>
+          <pre><code>=SORT(D2:D9, 1, -1)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=SORT(D2:D9, 1, -1)'>Copy</button></div>
+        </div>
+
+        <!-- 49 -->
+        <div class="card formula-card" data-keywords="unique duplicate quick access">
+          <h3>UNIQUE (duplicate shown)</h3>
+          <div class="meta small">Quick access</div>
+          <pre><code>=UNIQUE(D2:D9)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=UNIQUE(D2:D9)'>Copy</button></div>
+        </div>
+
+        <!-- 50 -->
+        <div class="card formula-card" data-keywords="left duplicate quick access">
+          <h3>LEFT (duplicate shown)</h3>
+          <div class="meta small">Quick access</div>
+          <pre><code>=LEFT(D2, SEARCH(".", D2) - 1)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=LEFT(D2, SEARCH(".", D2) - 1)'>Copy</button></div>
+        </div>
+
+        <!-- 51 -->
+        <div class="card formula-card" data-keywords="mid duplicate quick access">
+          <h3>MID (duplicate shown)</h3>
+          <div class="meta small">Quick access</div>
+          <pre><code>=MID(D2, SEARCH(".", D2) + 1, SEARCH("@", D2) - SEARCH(".", D2) - 1)</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=MID(D2, SEARCH(".", D2) + 1, SEARCH("@", D2) - SEARCH(".", D2) - 1)'>Copy</button></div>
+        </div>
+
+        <!-- 52 -->
+        <div class="card formula-card" data-keywords="right duplicate quick access">
+          <h3>RIGHT (duplicate shown)</h3>
+          <div class="meta small">Quick access</div>
+          <pre><code>=RIGHT(D2, LEN(D2) - SEARCH("@", D2))</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=RIGHT(D2, LEN(D2) - SEARCH("@", D2))'>Copy</button></div>
+        </div>
+
+        <!-- 53 -->
+        <div class="card formula-card" data-keywords="isnumber search duplicate quick access">
+          <h3>ISNUMBER + SEARCH (duplicate shown)</h3>
+          <div class="meta small">Quick access</div>
+          <pre><code>=ISNUMBER(SEARCH("a", C2))</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='=ISNUMBER(SEARCH("a", C2))'>Copy</button></div>
+        </div>
+
+      </div>
+
+      <!-- Right column: Python Programs -->
+      <div class="column" id="python-col">
+        <div class="section-title">Python Programs (Questions + Code)</div>
+
+        <!-- Program 1 -->
+        <div class="card code-card" data-keywords="t-test independent perform test of significance a b scipy ttest_ind">
+          <h3>Perform Test of significance — Independent t-test (dummy data)</h3>
+          <div class="meta small">Question: Perform Independent t-test on dummy data</div>
+          <pre><code>import numpy as np
+from scipy.stats import ttest_ind
+
+a = [25, 28, 30, 26, 29, 27, 31, 24, 28, 26]
+b = [22, 24, 23, 20, 25, 21, 22, 23, 20, 24]
+
+t, p = ttest_ind(a, b)
+print(f"T={t:.2f}, P={p:.4f}")
+print("Significant" if p &lt; 0.05 else "Not Significant")</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='import numpy as np\nfrom scipy.stats import ttest_ind\n\na = [25, 28, 30, 26, 29, 27, 31, 24, 28, 26]\nb = [22, 24, 23, 20, 25, 21, 22, 23, 20, 24]\n\n\nt, p = ttest_ind(a, b)\nprint(f"T={t:.2f}, P={p:.4f}")\nprint("Significant" if p < 0.05 else "Not Significant")'>Copy</button></div>
+        </div>
+
+        <!-- Program 2 -->
+        <div class="card code-card" data-keywords="one sample t-test ttest_1samp scipy data 500">
+          <h3>Perform One Sample T-test (dummy data)</h3>
+          <div class="meta small">Question: Perform One Sample T-test on dummy data</div>
+          <pre><code>import numpy as np
+from scipy.stats import ttest_1samp
+
+data = [650, 470, 520, 480, 530, 450, 560, 480, 510]
+t, p = ttest_1samp(data, 500)
+
+print(f"T={t:.2f}, P={p:.4f}")
+print("Significant" if p &lt; 0.05 else "Not Significant")</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='import numpy as np\nfrom scipy.stats import ttest_1samp\n\n\ndata = [650, 470, 520, 480, 530, 450, 560, 480, 510]\nt, p = ttest_1samp(data, 500)\n\nprint(f"T={t:.2f}, P={p:.4f}")\nprint("Significant" if p < 0.05 else "Not Significant")'>Copy</button></div>
+        </div>
+
+        <!-- Program 3 -->
+        <div class="card code-card" data-keywords="anova one way f_oneway scipy g1 g2 g3">
+          <h3>Perform ANOVA (one-way) on dummy data</h3>
+          <div class="meta small">Question: One-way ANOVA on dummy groups</div>
+          <pre><code>from scipy.stats import f_oneway
+
+g1 = [10, 12, 11, 13, 10]
+g2 = [15, 14, 16, 17, 15]
+g3 = [18, 19, 17, 20, 18]
+
+f, p = f_oneway(g1, g2, g3)
+print(f"F={f:.2f}, P={p:.4f}")
+print("Significant" if p &lt; 0.05 else "Not Significant")</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='from scipy.stats import f_oneway\n\ng1 = [10, 12, 11, 13, 10]\ng2 = [15, 14, 16, 17, 15]\ng3 = [18, 19, 17, 20, 18]\n\nf, p = f_oneway(g1, g2, g3)\nprint(f"F={f:.2f}, P={p:.4f}")\nprint("Significant" if p < 0.05 else "Not Significant")'>Copy</button></div>
+        </div>
+
+        <!-- Program 4 -->
+        <div class="card code-card" data-keywords="anova two way ols statsmodels scatter treat gender">
+          <h3>Perform ANOVA (two-way) &amp; display table (dummy data)</h3>
+          <div class="meta small">Question: Two-way ANOVA (treat x gender)</div>
+          <pre><code>import pandas as pd
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
+
+df = pd.DataFrame({
+    'score': [23,25,27,22,30,32,34,31,40,42,39,41],
+    'treat': ['A','A','A','A','B','B','B','B','C','C','C','C'],
+    'gender': ['M','F','M','F','M','F','M','F','M','F','M','F']
+})
+
+model = ols('score ~ C(treat)*C(gender)', data=df).fit()
+print(sm.stats.anova_lm(model, typ=2))</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='import pandas as pd\nimport statsmodels.api as sm\nfrom statsmodels.formula.api import ols\n\n\ndf = pd.DataFrame({\n    "score": [23,25,27,22,30,32,34,31,40,42,39,41],\n    "treat": ["A","A","A","A","B","B","B","B","C","C","C","C"],\n    "gender": ["M","F","M","F","M","F","M","F","M","F","M","F"]\n})\n\nmodel = ols("score ~ C(treat)*C(gender)", data=df).fit()\nprint(sm.stats.anova_lm(model, typ=2))'>Copy</button></div>
+        </div>
+
+        <!-- Program 5 -->
+        <div class="card code-card" data-keywords="chi square test chi2_contingency heatmap df male female like dislike">
+          <h3>Perform Chi-square test (dummy contingency table)</h3>
+          <div class="meta small">Question: Chi-square test on 2x2 table</div>
+          <pre><code>import pandas as pd
+from scipy.stats import chi2_contingency
+
+df = pd.DataFrame([[50,30],[20,40]], 
+                  index=['Male','Female'], 
+                  columns=['Like','Dislike'])
+
+chi2, p, dof, exp = chi2_contingency(df)
+print(f"Chi²={chi2:.2f}, p={p:.4f}, dof={dof}")
+print("Significant" if p &lt; 0.05 else "Not Significant")</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='import pandas as pd\nfrom scipy.stats import chi2_contingency\n\n\ndf = pd.DataFrame([[50,30],[20,40]], \n                  index=["Male","Female"], \n                  columns=["Like","Dislike"])\n\nchi2, p, dof, exp = chi2_contingency(df)\nprint(f"Chi²={chi2:.2f}, p={p:.4f}, dof={dof}")\nprint("Significant" if p < 0.05 else "Not Significant")'>Copy</button></div>
+        </div>
+
+        <!-- Program 6 -->
+        <div class="card code-card" data-keywords="linear regression simple sklearn fraud amount hour plot">
+          <h3>Simple Linear Regression: Amount vs Hour (fraud dataset)</h3>
+          <div class="meta small">Question: Fit, test and predict using LinearRegression</div>
+          <pre><code>import pandas as pd
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score, mean_squared_error
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("fraud_detection_hypothesis_testing.csv")
+if 'hour' not in df: df['hour'] = np.random.randint(0,24,len(df))
+
+X, Y = df[['hour']], df['amount']
+m = LinearRegression().fit(X, Y)
+
+Yp = m.predict(X)
+print(f"Y = {m.intercept_:.2f} + {m.coef_[0]:.2f}X")
+print(f"R²={r2_score(Y,Yp):.4f}, RMSE={mean_squared_error(Y,Yp, squared=False):.2f}")
+
+plt.scatter(df['hour'], Y, color='b')
+plt.plot(df['hour'], Yp, color='r')
+plt.xlabel('Hour'); plt.ylabel('Amount')
+plt.title('Linear Regression: Amount vs Hour')
+plt.show()</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='import pandas as pd\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.metrics import r2_score, mean_squared_error\nimport matplotlib.pyplot as plt\n\ndf = pd.read_csv("fraud_detection_hypothesis_testing.csv")\nif "hour" not in df: df["hour"] = np.random.randint(0,24,len(df))\n\nX, Y = df[["hour"]], df["amount"]\nm = LinearRegression().fit(X, Y)\n\nYp = m.predict(X)\nprint(f"Y = {m.intercept_:.2f} + {m.coef_[0]:.2f}X")\nprint(f"R²={r2_score(Y,Yp):.4f}, RMSE={mean_squared_error(Y,Yp, squared=False):.2f}")\n\nplt.scatter(df["hour"], Y, color="b")\nplt.plot(df["hour"], Yp, color="r")\nplt.xlabel("Hour"); plt.ylabel("Amount")\nplt.title("Linear Regression: Amount vs Hour")\nplt.show()'>Copy</button></div>
+        </div>
+
+        <!-- Program 7 -->
+        <div class="card code-card" data-keywords="multiple linear regression sklearn hour is_fraud amount train_test_split">
+          <h3>Multiple Linear Regression (hour, is_fraud → amount)</h3>
+          <div class="meta small">Question: Train/test, evaluate and predict</div>
+          <pre><code>import pandas as pd, numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score, mean_squared_error
+
+df = pd.read_csv("fraud_detection_hypothesis_testing.csv")
+if 'hour' not in df: df['hour'] = np.random.randint(0,24,len(df))
+
+X, y = df[['hour','is_fraud']], df['amount']
+Xt, Xv, yt, yv = train_test_split(X, y, test_size=0.2, random_state=42)
+
+m = LinearRegression().fit(Xt, yt)
+yp = m.predict(Xv)
+
+print(f"Y = {m.intercept_:.2f} + {m.coef_[0]:.2f}*hour + {m.coef_[1]:.2f}*is_fraud")
+print(f"R²={r2_score(yv,yp):.4f}, RMSE={mean_squared_error(yv,yp,squared=False):.2f}")
+
+nd = pd.DataFrame({'hour':[10,15],'is_fraud':[0,1]})
+print("\nPredictions:\n", nd.assign(Predicted=m.predict(nd)))</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='import pandas as pd, numpy as np\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.metrics import r2_score, mean_squared_error\n\ndf = pd.read_csv("fraud_detection_hypothesis_testing.csv")\nif "hour" not in df: df["hour"] = np.random.randint(0,24,len(df))\n\nX, y = df[["hour","is_fraud"]], df["amount"]\nXt, Xv, yt, yv = train_test_split(X, y, test_size=0.2, random_state=42)\n\nm = LinearRegression().fit(Xt, yt)\nyp = m.predict(Xv)\n\nprint(f"Y = {m.intercept_:.2f} + {m.coef_[0]:.2f}*hour + {m.coef_[1]:.2f}*is_fraud")\nprint(f"R²={r2_score(yv,yp):.4f}, RMSE={mean_squared_error(yv,yp,squared=False):.2f}")\n\nnd = pd.DataFrame({\"hour\":[10,15],\"is_fraud\":[0,1]})\nprint(\"\\nPredictions:\\n\", nd.assign(Predicted=m.predict(nd)))'>Copy</button></div>
+        </div>
+
+        <!-- Program 8 -->
+        <div class="card code-card" data-keywords="logistic regression sklearn hour amount is_fraud accuracy confusion">
+          <h3>Logistic Regression (hour, amount → is_fraud)</h3>
+          <div class="meta small">Question: Train/test and evaluate logistic regression model</div>
+          <pre><code>import pandas as pd, numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+
+df = pd.read_csv("fraud_detection_hypothesis_testing.csv")
+if 'hour' not in df: df['hour'] = np.random.randint(0,24,len(df))
+
+X, y = df[['hour','amount']], df['is_fraud']
+Xt, Xv, yt, yv = train_test_split(X, y, test_size=0.2, random_state=42)
+
+m = LogisticRegression().fit(Xt, yt)
+yp = m.predict(Xv)
+
+print(f"Acc={accuracy_score(yv,yp)*100:.2f}%")
+print(confusion_matrix(yv, yp))
+print(classification_report(yv, yp))
+
+nd = pd.DataFrame({'hour':[10,15],'amount':[5000,20000]})
+print("\nPredictions:\n", nd.assign(Predicted=m.predict(nd)))</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='import pandas as pd, numpy as np\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.metrics import accuracy_score, confusion_matrix, classification_report\n\ndf = pd.read_csv("fraud_detection_hypothesis_testing.csv")\nif "hour" not in df: df["hour"] = np.random.randint(0,24,len(df))\n\nX, y = df[["hour","amount"]], df["is_fraud"]\nXt, Xv, yt, yv = train_test_split(X, y, test_size=0.2, random_state=42)\n\nm = LogisticRegression().fit(Xt, yt)\nyp = m.predict(Xv)\n\nprint(f"Acc={accuracy_score(yv,yp)*100:.2f}%")\nprint(confusion_matrix(yv, yp))\nprint(classification_report(yv, yp))\n\nnd = pd.DataFrame({\"hour\":[10,15],\"amount\":[5000,20000]})\nprint(\"\\nPredictions:\\n\", nd.assign(Predicted=m.predict(nd)))'>Copy</button></div>
+        </div>
+
+        <!-- Program 9 -->
+        <div class="card code-card" data-keywords="fraud detection hypothesis testing welchs t test ttest_ind one sided">
+          <h3>Fraud Detection — Hypothesis Testing (Welch’s t-test one-sided)</h3>
+          <div class="meta small">Question: Use hypothesis testing &amp; CI to compare fraud vs non-fraud amounts</div>
+          <pre><code>import pandas as pd, numpy as np
+from scipy.stats import ttest_ind
+
+df = pd.read_csv(r"C:\Users\DELL\Documents\fraud_detection_hypothesis_testing.csv")
+
+f, nf = df[df.is_fraud==1]['amount'], df[df.is_fraud==0]['amount']
+
+t, p = ttest_ind(f, nf, equal_var=False)
+p1 = p/2 if t &gt; 0 else 1 - p/2
+
+print(f"Mean_Fraud={f.mean():.2f}, Mean_NonFraud={nf.mean():.2f}")
+print(f"SD_Fraud={f.std():.2f}, SD_NonFraud={nf.std():.2f}")
+
+print(f"T={t:.2f}, P(one-sided)={p1:.5f}")
+print("✅ Fraud &gt; Non-Fraud" if p1 &lt; 0.05 else "❌ No significant difference")</code></pre>
+          <div class="actions"><button class="copy-btn" data-target='import pandas as pd, numpy as np\nfrom scipy.stats import ttest_ind\n\ndf = pd.read_csv(r"C:\Users\DELL\Documents\fraud_detection_hypothesis_testing.csv")\n\nf, nf = df[df.is_fraud==1][\"amount\"], df[df.is_fraud==0][\"amount\"]\n\nt, p = ttest_ind(f, nf, equal_var=False)\np1 = p/2 if t > 0 else 1 - p/2\n\nprint(f"Mean_Fraud={f.mean():.2f}, Mean_NonFraud={nf.mean():.2f}")\nprint(f"SD_Fraud={f.std():.2f}, SD_NonFraud={nf.std():.2f}")\n\nprint(f"T={t:.2f}, P(one-sided)={p1:.5f}")\nprint("✅ Fraud > Non-Fraud" if p1 < 0.05 else "❌ No significant difference")'>Copy</button></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div style="margin-top:18px;color:var(--muted);font-size:13px">
+      <strong>How to deploy:</strong> Save this file as <code>index.html</code>. Create a folder (you can add a logo or assets), then drag-and-drop the folder or file into Netlify's "Add new site → Deploy manually" area. Netlify will publish a link like <code>https://your-site-name.netlify.app</code>.
+    </div>
+  </div>
+
+<script>
+  // Live search
+  const q = document.getElementById('q');
+  const cards = Array.from(document.querySelectorAll('.card'));
+  const clearBtn = document.getElementById('clear');
+  const expandBtn = document.getElementById('expand');
+
+  function normalize(s){
+    return (''+s).toLowerCase();
+  }
+
+  function highlightText(node, term){
+    if(!term) return;
+    const text = node.innerHTML;
+    const re = new RegExp(term.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'ig');
+    node.innerHTML = text.replace(re, m => '<mark>'+m+'</mark>');
+  }
+
+  function removeHighlights(node){
+    const marks = node.querySelectorAll('mark');
+    marks.forEach(m => m.replaceWith(m.textContent));
+  }
+
+  function filterCards(){
+    const term = normalize(q.value.trim());
+    cards.forEach(card => {
+      removeHighlights(card);
+      const hay = normalize(card.innerText + ' ' + (card.dataset.keywords || ''));
+      if(!term || hay.includes(term)){
+        card.classList.remove('hidden');
+        if(term) highlightText(card, term);
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+  }
+
+  q.addEventListener('input', filterCards);
+  clearBtn.addEventListener('click', ()=>{ q.value=''; filterCards(); q.focus(); });
+  expandBtn.addEventListener('click', ()=>{
+    // toggle show all / filter by empty
+    if(q.value===''){
+      q.value='*'; filterCards();
+      // reset after a moment
+      setTimeout(()=>{ q.value=''; filterCards(); }, 80);
+    } else {
+      q.value=''; filterCards();
+    }
+  });
+
+  // Copy buttons
+  document.querySelectorAll('.copy-btn').forEach(btn=>{
+    btn.addEventListener('click', async (e)=>{
+      const txt = btn.getAttribute('data-target');
+      try{
+        await navigator.clipboard.writeText(txt);
+        btn.textContent='Copied ✓';
+        setTimeout(()=>btn.textContent='Copy',900);
+      }catch(err){
+        // fallback: create textarea
+        const ta = document.createElement('textarea');
+        ta.value = txt;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+        btn.textContent='Copied ✓';
+        setTimeout(()=>btn.textContent='Copy',900);
+      }
+    });
+  });
+
+  // initial
+  filterCards();
+</script>
+</body>
+</html>
